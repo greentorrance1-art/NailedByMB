@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--pink:#F591CF;--pink-light:#ffd8ec;--plum:#895174;
+--black:#0a0a0a;--black-mid:#111;--surface:#161616;--surface-2:#1e1e1e;
+--text:#e8e0e5;--text-muted:#9a8a95;
+--border:rgba(245,145,207,0.13);--border-mid:rgba(245,145,207,0.24);
+--glow:rgba(245,145,207,0.18);
+--fd:'Oswald',sans-serif;--fs:'Cormorant Garamond',serif;--fb:'DM Sans',sans-serif;
+--r:12px;--rl:20px;--rp:9999px;
+}
+html{font-size:14px;scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:var(--fb);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{cursor:pointer;border:none;background:none;font:inherit}
+img{display:block;max-width:100%}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;height:56px;display:flex;align-items:center;padding:0 24px;background:rgba(10,10,10,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1100px;margin:0 auto}
+.nav-logo{font-family:var(--fd);font-size:1.2rem;font-weight:700;letter-spacing:.06em;color:var(--pink);text-transform:uppercase}
+.nav-logo span{color:var(--text)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);transition:color .2s}
+.nav-links a:hover{color:var(--pink)}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--fb);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;padding:10px 22px;border-radius:var(--rp);transition:all .25s;cursor:pointer;border:none}
+.btn-p{background:var(--pink);color:var(--black);box-shadow:0 0 24px rgba(245,145,207,.22)}
+.btn-p:hover{background:var(--pink-light);transform:scale(1.04)}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border-mid)}
+.btn-o:hover{border-color:var(--pink);color:var(--pink)}
+.btn-sm{padding:8px 18px;font-size:.62rem}
+
+/* HERO */
+.hero{position:relative;height:480px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.28;filter:grayscale(20%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.3) 0%,rgba(10,10,10,.6) 50%,rgba(10,10,10,.98) 100%)}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.orb1{width:380px;height:380px;background:radial-gradient(circle,rgba(245,145,207,.1) 0%,transparent 70%);top:0%;left:-8%}
+.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(137,81,116,.13) 0%,transparent 70%);bottom:5%;right:-5%}
+.hero-content{position:relative;z-index:2;max-width:700px;padding:0 20px;animation:fadeUp .8s .2s ease both}
+.hero-eye{font-family:var(--fs);font-style:italic;font-size:1rem;color:var(--pink);margin-bottom:14px}
+.hero-title{font-family:var(--fd);font-size:clamp(3rem,9vw,6.5rem);font-weight:700;line-height:.9;letter-spacing:-.01em;text-transform:uppercase;color:var(--text);margin-bottom:18px}
+.hero-title em{font-style:normal;color:var(--pink);display:block}
+.hero-sub{font-size:.88rem;color:var(--text-muted);max-width:420px;margin:0 auto 28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-loc{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:2;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:5px;animation:fadeUp .8s .9s ease both;opacity:0}
+
+/* SECTIONS */
+.sec{padding:72px 0}
+.container{width:100%;max-width:1100px;margin:0 auto;padding:0 24px}
+.label{font-family:var(--fb);font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--pink);margin-bottom:.6rem}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--pink) 40%,var(--plum) 60%,transparent);opacity:.2}
+
+/* INTRO */
+.intro{background:var(--black-mid);padding:64px 0;text-align:center;position:relative}
+.intro::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(245,145,207,.05) 0%,transparent 70%);pointer-events:none}
+.intro-heading{font-family:var(--fs);font-size:clamp(2rem,5vw,3.5rem);font-style:italic;font-weight:300;color:var(--pink);margin-bottom:24px;position:relative;z-index:1}
+.intro-heading strong{font-family:var(--fd);font-style:normal;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em}
+.intro-card{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:32px 40px;position:relative;z-index:1}
+.intro-card p{font-size:.88rem;line-height:1.8;color:var(--text-muted);margin-bottom:18px}
+.intro-card p strong{color:var(--text)}
+.intro-sig{font-family:var(--fs);font-style:italic;font-size:1.6rem;color:var(--pink);font-weight:300}
+
+/* SERVICES */
+.svc-hdr{margin-bottom:40px}
+.svc-title{font-family:var(--fd);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;color:var(--text)}
+.svc-title span{color:var(--pink)}
+.svc-sub{font-family:var(--fs);font-style:italic;font-size:.95rem;color:var(--text-muted);margin-top:4px}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:26px;display:flex;flex-direction:column;gap:10px;transition:all .25s}
+.svc-card:hover{border-color:var(--pink);background:var(--surface-2);transform:translateY(-2px);box-shadow:0 12px 36px rgba(245,145,207,.08)}
+.svc-icon{font-size:1.5rem;margin-bottom:2px}
+.svc-name{font-family:var(--fd);font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text)}
+.svc-desc{font-size:.78rem;color:var(--text-muted);line-height:1.6;flex:1}
+.svc-cta{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--pink);margin-top:6px}
+
+/* BOOKING STRIP */
+.bstrip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 0}
+.bstrip-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.blabel{font-family:var(--fd);font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--pink);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.blabel svg{width:16px;height:16px}
+.bblock p,.bblock li{font-size:.82rem;color:var(--text-muted);line-height:1.7}
+.bblock strong{color:var(--text)}
+.bblock a{color:var(--pink)}
+.clist{display:flex;flex-direction:column;gap:9px}
+.citem{display:flex;align-items:center;gap:9px;font-size:.82rem;color:var(--text-muted)}
+.citem svg{width:14px;height:14px;color:var(--pink);flex-shrink:0}
+.locnote{margin-top:14px;font-size:.76rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:7px;padding:10px 14px;background:var(--surface-2);border-radius:var(--r);border-left:3px solid var(--pink)}
+
+/* POLICIES */
+.pol-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;color:var(--text)}
+.pol-title em{font-style:italic;font-family:var(--fs);font-weight:300;color:var(--pink);text-transform:none;font-size:.7em;display:block;letter-spacing:.05em}
+.pol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:36px}
+.pol-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px;transition:all .25s}
+.pol-card:hover{border-color:var(--border-mid);background:var(--surface-2)}
+.pol-icon{width:40px;height:40px;background:var(--glow);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.1rem}
+.pol-ttl{font-family:var(--fd);font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text);margin-bottom:10px}
+.pol-body{font-size:.76rem;color:var(--text-muted);line-height:1.7}
+.pol-body strong{color:var(--pink)}
+.banned{color:#ff6b6b;font-weight:700}
+
+/* EXTRA INFO */
+.extra{background:var(--black-mid);position:relative;overflow:hidden}
+.extra::before{content:'';position:absolute;top:0;right:-20%;width:60%;height:100%;background:radial-gradient(ellipse at center,rgba(245,145,207,.04) 0%,transparent 70%);pointer-events:none}
+.extra-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--text)}
+.extra-title em{font-style:italic;font-family:var(--fs);font-weight:300;color:var(--pink);text-transform:none}
+.extra-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;position:relative;z-index:1}
+.extra-item{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);font-size:.78rem;color:var(--text-muted);line-height:1.6;transition:border-color .2s}
+.extra-item:hover{border-color:var(--border-mid)}
+.extra-item::before{content:'♡';color:var(--pink);font-size:.82rem;flex-shrink:0;margin-top:1px}
+
+/* PREPARE */
+.prep-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--text)}
+.prep-title em{font-style:italic;font-family:var(--fs);font-weight:300;color:var(--pink);text-transform:none}
+.prep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:32px}
+.prep-item{display:flex;align-items:center;gap:12px;padding:15px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);font-size:.78rem;font-weight:500;color:var(--text);text-transform:uppercase;letter-spacing:.06em;transition:all .25s}
+.prep-item:hover{border-color:var(--pink);color:var(--pink);background:var(--surface-2)}
+.prep-item::before{content:'✓';width:24px;height:24px;background:var(--pink);color:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0}
+
+/* GALLERY */
+.gal{background:var(--black-mid)}
+.gal-hdr{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.gal-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--text)}
+.gal-title span{color:var(--pink)}
+.ig-badge{display:flex;align-items:center;gap:7px;font-size:.68rem;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);border-radius:var(--rp);padding:7px 14px}
+.ig-badge svg{width:14px;height:14px;color:var(--pink)}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gal-ph{aspect-ratio:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:var(--text-muted);font-size:.68rem}
+.gal-ph svg{width:24px;height:24px;color:var(--plum)}
+.gal-connect{margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.gal-connect h4{font-family:var(--fd);font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:3px}
+.gal-connect p{font-size:.75rem;color:var(--text-muted)}
+
+/* REVIEWS */
+.rev-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:36px}
+.rev-title span{color:var(--pink)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.rev-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:26px;transition:all .25s}
+.rev-card:hover{border-color:var(--border-mid);transform:translateY(-2px)}
+.rev-stars{color:var(--pink);font-size:.82rem;margin-bottom:14px;letter-spacing:3px}
+.rev-body{font-family:var(--fs);font-style:italic;font-size:.95rem;color:var(--text);line-height:1.75;margin-bottom:16px}
+.rev-auth{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--text-muted)}
+.rev-handle{font-size:.68rem;color:var(--pink);margin-top:2px}
+
+/* PROCESS */
+.proc{background:var(--black-mid)}
+.proc-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;text-transform:uppercase;color:var(--text);text-align:center;margin-bottom:48px}
+.proc-title span{color:var(--pink)}
+.proc-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.proc-steps::before{content:'';position:absolute;top:32px;left:calc(16.66% + 16px);right:calc(16.66% + 16px);height:1px;background:linear-gradient(90deg,var(--pink) 0%,var(--plum) 100%);opacity:.22}
+.proc-step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.proc-num{width:64px;height:64px;border-radius:50%;background:var(--surface);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;font-weight:700;color:var(--pink);position:relative;z-index:1;transition:all .25s}
+.proc-step:hover .proc-num{background:var(--pink);color:var(--black);border-color:var(--pink)}
+.proc-ttl{font-family:var(--fd);font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text)}
+.proc-desc{font-size:.76rem;color:var(--text-muted);max-width:190px;line-height:1.6}
+
+/* CTA FINAL */
+.cta-final{background:var(--black);text-align:center;position:relative;overflow:hidden;padding:80px 0}
+.cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(245,145,207,.07) 0%,transparent 65%);pointer-events:none}
+.cta-big{font-family:var(--fd);font-size:clamp(2.5rem,8vw,5.5rem);font-weight:700;text-transform:uppercase;line-height:.9;color:var(--text);margin-bottom:20px;position:relative;z-index:1}
+.cta-big span{color:var(--pink);display:block}
+.cta-sub{font-size:.85rem;color:var(--text-muted);max-width:380px;margin:0 auto 32px;line-height:1.7;position:relative;z-index:1}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* FOOTER */
+.footer{background:var(--black-mid);border-top:1px solid var(--border);padding:36px 0 24px}
+.footer-inner{display:flex;flex-direction:column;gap:24px}
+.footer-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.footer-brand{font-family:var(--fd);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--pink);margin-bottom:4px}
+.footer-tag{font-family:var(--fs);font-style:italic;font-size:.82rem;color:var(--text-muted)}
+.footer-links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-links a{font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);transition:color .2s}
+.footer-links a:hover{color:var(--pink)}
+.footer-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:1px solid var(--border)}
+.footer-copy{font-size:.65rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase}
+.footer-ig{display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--text-muted);transition:color .2s}
+.footer-ig:hover{color:var(--pink)}
+.footer-ig svg{width:12px;height:12px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeUp .7s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Nailed<span>.</span>bymb</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#policies">Policies</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#process">Process</a>
+    </nav>
+    <button class="btn btn-p btn-sm" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book Now ♡</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://cdn-s.acuityscheduling.com/upload-9654e3c35d91d6e6a3ee1fad38a070c2.jpg" alt="Nailed.bymb"/>
+  </div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-content">
+    <p class="hero-eye">Hello Gorgeous ✦</p>
+    <h1 class="hero-title">Nailed<em>By&nbsp;Mb</em></h1>
+    <p class="hero-sub">Custom sets built around your vision — from clean basics to full freestyle artistry. Nail Technician in Quincy, MA.</p>
+    <div class="hero-btns">
+      <button class="btn btn-p" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book Your Set ♡</button>
+      <a class="btn btn-o" href="#services">View Services</a>
+    </div>
+  </div>
+  <div class="hero-loc anim">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    Quincy, MA
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+  <div class="container">
+    <h2 class="intro-heading"><strong>Hello</strong> Gorgeous ✦</h2>
+    <div class="intro-card">
+      <p><strong>Welcome to my page &amp; thanks for considering me!</strong></p>
+      <p>To all my wonderful clients — thank you for your trust. To new clients, I can't wait to meet you. Together, we'll create the perfect nails just for you. My main goal is for <strong>YOU</strong> to leave feeling happy and beautiful!</p>
+      <div class="intro-sig">Yours truly, Maddy ♡</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="container">
+    <div class="svc-hdr">
+      <p class="label">What I Offer</p>
+      <h2 class="svc-title">The <span>Menu</span> ♡</h2>
+      <p class="svc-sub">Every set is built to your shape, your style, your moment.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card"><div class="svc-icon">💅</div><div class="svc-name">Basic Full Sets</div><div class="svc-desc">Clean, precise, polished. The foundation of a great set — flawless shape, solid color, long-lasting wear.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">🎨</div><div class="svc-name">Freestyle Full Sets</div><div class="svc-desc">Bring your inspo, or trust me to create. Custom designs, creative freedom, no limits.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">🤍</div><div class="svc-name">French Tip / V-Cut</div><div class="svc-desc">Classic elevated. French tips and V-cuts done with precision — the timeless look, done right.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">🌸</div><div class="svc-name">Ombré Full Sets</div><div class="svc-desc">Seamless gradient blends. Soft fades, bold contrasts — ombré done smooth, rich, and intentional.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">✨</div><div class="svc-name">Overlays</div><div class="svc-desc">Strength and polish over natural nails. Structure without length — ideal for growing out your nails.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">🔄</div><div class="svc-name">Refills</div><div class="svc-desc">Keep your set looking fresh. Book accordingly with your fullsets and refills.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">🫧</div><div class="svc-name">Removals</div><div class="svc-desc">Safe, careful removal. Coming in with nails that aren't mine? Book a foreign soak-off first.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+      <div class="svc-card"><div class="svc-icon">➕</div><div class="svc-name">Extras &amp; Add-Ons</div><div class="svc-desc">Nail art, gems, chrome — the finishing touches that make a set truly yours. Add at booking.</div><div class="svc-cta" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book This ♡ →</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BOOKING INFO -->
+<section class="bstrip" id="booking-info">
+  <div class="container">
+    <div class="bstrip-grid">
+      <div class="bblock">
+        <div class="blabel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Booking Hours
+        </div>
+        <p><strong>Bookings drop monthly on the 20th.</strong> Check out the calendar below for available dates and times.</p>
+        <br/>
+        <button class="btn btn-p btn-sm" style="margin-top:6px" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">View Calendar ♡</button>
+      </div>
+      <div class="bblock">
+        <div class="blabel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.9v2.02z"/></svg>
+          Contact Info
+        </div>
+        <div class="clist">
+          <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.9v2.02z"/></svg><span><a href="tel:7818134520" style="color:var(--pink)">781-813-4520</a> <span style="font-size:.72rem">(emergencies only — no Apple Pay)</span></span></div>
+          <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://www.instagram.com/nailed.bymb" target="_blank" style="color:var(--pink)">@NAILED.BYMB</a></div>
+          <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>Cash App: <strong>$Maddybabbyy</strong> · DM for Zelle #</span></div>
+        </div>
+        <div class="locnote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;margin-top:1px"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span><strong>Location</strong> given <strong>24 hours prior</strong> to your appointment. ♡♡♡</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- POLICIES -->
+<section class="sec" id="policies" style="background:var(--black)">
+  <div class="container">
+    <p class="label">Please Read Before Booking</p>
+    <h2 class="pol-title">Booking<em>Policies</em></h2>
+    <div class="pol-grid">
+      <div class="pol-card"><div class="pol-icon">📅</div><div class="pol-ttl">Appointments</div><div class="pol-body">Book fullsets &amp; refills accordingly.<br/><br/><strong>Squeeze-in fee = $25</strong><br/><br/>No call, no shows = <span class="banned">BANNED</span><br/><br/>To rebook after a no-show, pay half the total. Balance due with new deposit. <strong>Consult with me first.</strong></div></div>
+      <div class="pol-card"><div class="pol-icon">💵</div><div class="pol-ttl">Deposit</div><div class="pol-body">A <strong>non-refundable $15 deposit</strong> secures your booking and goes toward your total. Due within <strong>30 minutes</strong> after booking. ♡<br/><br/><strong>Remaining balance: cash only.</strong></div></div>
+      <div class="pol-card"><div class="pol-icon">🕐</div><div class="pol-ttl">Late Arrivals</div><div class="pol-body">Timely arrival is crucial.<br/><strong>10 mins late = $10</strong><br/><strong>15 mins late = $15</strong><br/><strong>20 mins late = Cancelled</strong><br/><br/>Includes traffic, parking, Uber delays. Please plan accordingly. ♡</div></div>
+      <div class="pol-card"><div class="pol-icon">✕</div><div class="pol-ttl">Cancellations</div><div class="pol-body">Cancel <strong>24+ hours before</strong> your appointment.<br/><br/>Over 24 hrs: deposit transfers <em>one time</em>.<br/><br/>Within 24 hrs: new <strong>$25 deposit</strong> required.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA INFO -->
+<section class="sec extra" id="extra-info">
+  <div class="container">
+    <p class="label">Good to Know</p>
+    <h2 class="extra-title">Extra<em> Info ✦</em></h2>
+    <div class="extra-grid">
+      <div class="extra-item">Add all add-ons/extras to your appointment at booking — I cannot do them after.</div>
+      <div class="extra-item">Do not put anything in the "for" section on Cash App when sending payment. Emojis are okay!</div>
+      <div class="extra-item">I will fix any nail that breaks within <strong>3 days</strong> of your fullset free. After that: <strong>$3/finger</strong>.</div>
+      <div class="extra-item">Need help booking? <strong>DM me.</strong> I'm open to all questions, ideas, and thoughts!</div>
+      <div class="extra-item">I cannot refill/work over nails that aren't mine. Book a <strong>foreign soak-off</strong> first.</div>
+      <div class="extra-item"><strong>I do not rush my work</strong> — each set varies with time. Come relaxed and ready. ♡</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREPARE -->
+<section class="sec" id="prepare" style="background:var(--black)">
+  <div class="container">
+    <p class="label">Before You Arrive</p>
+    <h2 class="prep-title">Prepare <em>for Appointment</em></h2>
+    <div class="prep-grid">
+      <div class="prep-item">Come with bare nails ♡</div>
+      <div class="prep-item">No extra guests ♡</div>
+      <div class="prep-item">Book soak-offs accordingly ♡</div>
+      <div class="prep-item">Come with cash ♡</div>
+      <div class="prep-item">Read all policies ♡</div>
+      <div class="prep-item">Cancel if feeling unwell ♡</div>
+      <div class="prep-item">DM inspo pic if needed ♡</div>
+      <div class="prep-item">Arrive on time! ♡</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec gal" id="gallery">
+  <div class="container">
+    <div class="gal-hdr">
+      <div>
+        <p class="label">The Work</p>
+        <h2 class="gal-title"><span>@nailed</span>.bymb</h2>
+      </div>
+      <a class="ig-badge" href="https://www.instagram.com/nailed.bymb" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Follow on Instagram
+      </a>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+      <div class="gal-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@nailed.bymb</div>
+    </div>
+    <div class="gal-connect">
+      <div class="gal-connect-text">
+        <h4>Connect Your Instagram Feed ♡</h4>
+        <p>Add your IG access token to <strong>app.js</strong> line 38 and your latest posts auto-load here.</p>
+      </div>
+      <a class="btn btn-o btn-sm" href="https://www.instagram.com/nailed.bymb" target="_blank">Visit Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec" id="reviews" style="background:var(--black)">
+  <div class="container">
+    <p class="label">Client Love</p>
+    <h2 class="rev-title">Client <span>Reviews ♡</span></h2>
+    <div class="rev-grid">
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-body">"She really listened to what I wanted and executed it perfectly. My freestyle set got so many compliments."</div><div class="rev-auth">Satisfied Client</div><div class="rev-handle">via Instagram DM</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-body">"Booked online in two minutes and showed up to the best nails I've ever had. The ombré was immaculate."</div><div class="rev-auth">Satisfied Client</div><div class="rev-handle">via Instagram DM</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-body">"Maddy takes her time and it really shows. My nails have never lasted so long without chipping."</div><div class="rev-auth">Satisfied Client</div><div class="rev-handle">via Instagram DM</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec proc" id="process">
+  <div class="container">
+    <p class="label" style="text-align:center">How It Works</p>
+    <h2 class="proc-title">The <span>Process</span></h2>
+    <div class="proc-steps">
+      <div class="proc-step"><div class="proc-num">01</div><div class="proc-ttl">Pick Your Service</div><div class="proc-desc">Browse the menu — Basic, Freestyle, French Tip, Ombré, Overlays, Refills, and more.</div></div>
+      <div class="proc-step"><div class="proc-num">02</div><div class="proc-ttl">Book Online ♡</div><div class="proc-desc">Choose your date through Acuity. Pay your $15 deposit within 30 mins to lock it in.</div></div>
+      <div class="proc-step"><div class="proc-num">03</div><div class="proc-ttl">Show Up &amp; Sit Down</div><div class="proc-desc">Come with bare nails and cash. Location sent 24 hours before. Leave with nails that are yours.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="book">
+  <div class="container">
+    <h2 class="cta-big">Your nails.<br/><span>Book it now ♡</span></h2>
+    <p class="cta-sub">Basic. Freestyle. French Tip. Ombré. Overlays. Refills. All bookable online. Drops the 20th.</p>
+    <div class="cta-btns">
+      <button class="btn btn-p" onclick="window.open('https://nailedbymb.as.me/schedule/dc3e34b0','_blank')">Book Your Appointment ♡</button>
+      <a class="btn btn-o" href="https://www.instagram.com/nailed.bymb" target="_blank">Follow @nailed.bymb</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">Nailed.bymb</div>
+          <div class="footer-tag">Nail Technician — Quincy, MA</div>
+        </div>
+        <nav class="footer-links">
+          <a href="#services">Services</a>
+          <a href="#policies">Policies</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#reviews">Reviews</a>
+          <a href="https://www.instagram.com/nailed.bymb" target="_blank">Instagram</a>
+        </nav>
+      </div>
+      <div class="footer-bot">
+        <span class="footer-copy">© 2025 Nailed.bymb · All rights reserved</span>
+        <a class="footer-ig" href="https://www.instagram.com/nailed.bymb" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @NAILED.BYMB
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
